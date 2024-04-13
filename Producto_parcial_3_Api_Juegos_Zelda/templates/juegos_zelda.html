@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juegos de The Legend of Zelda</title>
+    <style>
+        /* Estilo básico para mejorar la legibilidad (opcional) */
+        body {
+            font-family: sans-serif;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border: 1px solid #c8f500;
+        }
+        tr:nth-child(even) {
+            background-color: #15ff0028;
+        }
+    </style>
+</head>
+<body>
+    <h1>Juegos de The Legend of Zelda</h1>
+
+    <div id="datos-juego"></div>  <script>
+        // Obtiene los datos del juego usando un método seguro (Fetch API)
+        fetch('/api/zelda')
+            .then(respuesta => respuesta.json())
+            .then(datos => {
+                const contenedorDatos = document.getElementById('datos-juego');
+
+                // Crea una tabla para mostrar la información del juego
+                const tabla = document.createElement('table');
+                const encabezadoTabla = document.createElement('tr');
+
+                // Agrega encabezados de tabla dinámicamente según la estructura de datos obtenidos de la API
+                if (datos && datos.data && datos.data.length > 0) {
+                    const primerJuego = datos.data[0];
+                    for (const clave in primerJuego) {
+                        const encabezado = document.createElement('th');
+                        encabezado.textContent = clave.charAt(0).toUpperCase() + clave.slice(1);
+                        encabezadoTabla.appendChild(encabezado);
+                    }
+                    tabla.appendChild(encabezadoTabla);
+                } else {
+                    console.error('No se recibieron datos del juego de la API');
+                }
+
+                // Agrega filas de la tabla para cada uno de los juegos
+                datos.data.forEach(juego => {
+                    const filaTabla = document.createElement('tr');
+                    for (const clave in juego) {
+                        const celdaTabla = document.createElement('td');
+                        celdaTabla.textContent = juego[clave];
+                        filaTabla.appendChild(celdaTabla);
+                    }
+                    tabla.appendChild(filaTabla);
+                });
+
+                contenedorDatos.appendChild(tabla);
+            })
+            .catch(error => console.error(error));
+    </script>
+</body>
+</html>

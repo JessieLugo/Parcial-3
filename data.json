@@ -1,0 +1,12 @@
+{
+    "ip": "192.168.244.1",
+    "so": "Windows",
+    "version": [
+        "11",
+        "10.0.22631",
+        "SP0",
+        "Multiprocessor Free"
+    ],
+    "hostname": "SmolBeast",
+    "cpu": "AMD64 Family 23 Model 96 Stepping 1, AuthenticAMD"
+}
